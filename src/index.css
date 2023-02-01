@@ -18,6 +18,9 @@ body {
 .bgblac{
   background-color: rgb(0, 0, 0);
 }
+.mt20{
+  margin-top: 3%;
+}
 .max-desc{
   min-height: 150px;
   max-height: 150px;
