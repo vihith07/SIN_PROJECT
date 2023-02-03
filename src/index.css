@@ -9,6 +9,19 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.h60{
+  min-height: 150px;
+}
+.w2-3{
+width: 66%;
+max-height: 500px;
+overflow: auto;
+}
+.min-h-6{
+  min-height: 500px;
+  max-height: 500px;
+  overflow: auto;
+}
 .inh60{
   max-width: 100%;
   min-width: 100%;
