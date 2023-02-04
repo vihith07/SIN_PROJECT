@@ -3,9 +3,9 @@ import { useParams } from "react-router-dom";
 export default function Report(){
     const params=useParams();
     const [precentages,setPercentages]=useState({
-        like:60,
-        neutral:20,
-        dislike:20
+        like:0,
+        neutral:0,
+        dislike:0
     });
     useEffect(()=>{
         document.getElementById("lper").style.width=`${precentages.like}%`
@@ -25,29 +25,32 @@ export default function Report(){
     },[])
 
     const [Featuresarr,setFeatarr]=useState(
-        [{
-            // id:123,
-            featname:"Image Upload"
-        }]
+        []
     );
     const [Likecomm,setLikecomm]=useState([
-        {
-            usn:"test",
-            comment:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-        }
+        
     ]);
     const [Neucomm,setNeucomm]=useState([
-        {
-            usn:"test",
-            comment:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-        }
+        
     ]);
     const [Dlikecomm,setDlikecomm]=useState([
-        {
-            usn:"test",
-            comment:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-        }
+        
     ]);
+    useEffect(()=>{
+        let lcnt=Likecomm.length;
+        let neucnt=Neucomm.length;
+        let ncnt=Dlikecomm.length;
+        let total=lcnt+neucnt+ncnt;
+        let l=lcnt/total;
+        let ne=neucnt/total;
+        let n=ncnt/total;
+        let obj={
+            like:l.toPrecision(3)*100,
+            neutral:ne.toPrecision(3)*100,
+            dislike:n.toPrecision(3)*100
+        }
+        setPercentages(obj);
+    },[Likecomm])
     return(
         <div className="w-full my-4 mx-auto p-2 bg-[#D3DFED]">
             <div className="text-[#0075FF] font-semibold p-2 text-xl text-center ">Reports</div>
@@ -67,6 +70,9 @@ export default function Report(){
                                         method:"GET"
                                     }).then(res=>res.json()).then(data=>{
                                         console.log(data);
+                                        setLikecomm(data[0].pcomments)
+                                        setDlikecomm(data[0].ncomments)
+                                        setNeucomm(data[0].neucomments)
                                     }).catch(err=>console.log(err));
 
                                 }} id={feat.featname} className="flex text-xl my-2 hover:bg-[#8CB8EC] hover:text-white justify-between border-2 rounded-lg border-[#8CB8EC] p-2 text-[#0075FF]">
@@ -113,7 +119,7 @@ export default function Report(){
                                 Likecomm.map((like)=>{
                                     return(
                                         <div className="w-full border-[#8CB8EC] rounded-xl my-2 border-2 p-2 flex flex-col">
-                                <div className="font-bold">{`@${like.usn}`}</div>
+                                <div className="font-bold">{`@${like.commentid}`}</div>
                                 <div>{like.comment}</div>
                             </div>
                                     );
@@ -127,7 +133,7 @@ export default function Report(){
                                 Neucomm.map((like)=>{
                                     return(
                                         <div className="w-full border-[#8CB8EC] rounded-xl my-2 border-2 p-2 flex flex-col">
-                                <div className="font-bold">{`@${like.usn}`}</div>
+                                <div className="font-bold">{`@${like.commentid}`}</div>
                                 <div>{like.comment}</div>
                             </div>
                                     );
@@ -141,7 +147,7 @@ export default function Report(){
                                 Dlikecomm.map((like)=>{
                                     return(
                                         <div className="w-full border-[#8CB8EC] rounded-xl my-2 border-2 p-2 flex flex-col">
-                                <div className="font-bold">{`@${like.usn}`}</div>
+                                <div className="font-bold">{`@${like.commentid}`}</div>
                                 <div>{like.comment}</div>
                             </div>
                                     );
