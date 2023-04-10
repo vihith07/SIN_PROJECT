@@ -11,8 +11,8 @@ export default function Form(){
         }
         }).then(res=>res.json()).then(data=>{
             console.log(data);
-            document.getElementById("FeatureTitle").innerHTML=data[0].featname;
-            document.getElementById("FeatureDesc").innerHTML=data[0].fdesc;
+            document.getElementById("FeatureTitle").innerHTML=data[params.id].featname;
+            document.getElementById("FeatureDesc").innerHTML=data[params.id].fdesc;
             
         }).catch(err=>{console.log(err);})
     },[]);

@@ -61,13 +61,14 @@ export default function Report(){
                             
                             return(
                                 <div onClick={(e)=>{
-                                    const id=e.target.id;
+                                    let id=e.target.id;
                                     console.log(id)
-                                    fetch(`http://localhost:5000/report/${params.usn}/${id}`,{
+                                    fetch(`http://localhost:5000/report/${params.usn}`,{
                                         headers:{
                                             "Content-Type" : "application/json"
                                         },
-                                        method:"GET"
+                                        body:JSON.stringify({idi:id}),
+                                        method:"POST"
                                     }).then(res=>res.json()).then(data=>{
                                         console.log(data);
                                         setLikecomm(data[0].pcomments)
